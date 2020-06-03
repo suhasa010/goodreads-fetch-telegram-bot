@@ -24,7 +24,10 @@ export default async query => {
         let url = `https://www.goodreads.com/book/show/${book.id[0]._}`;
         let thumb_url = book.image_url[0];
         let cover_url = null;
-
+        let average_rating = result.average_rating;
+        let description = result.description;
+        
+        console.log(result.description)
         // Using dirty and unstable way to get a book cover :(
         if (thumb_url.indexOf("._SX") !== -1) {
           let n = thumb_url.lastIndexOf("._SX");
@@ -41,7 +44,9 @@ export default async query => {
           author,
           url,
           thumb_url,
-          cover_url
+          cover_url,
+          average_rating,
+          description
         };
       });
   } catch (error) {
