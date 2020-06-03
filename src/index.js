@@ -4,13 +4,15 @@ import searchBooks from "./searchBooks";
 
 const BOT_TOKEN = process.env.BOT_TOKEN || "";
 const PORT = process.env.PORT || 3000;
-const URL = process.env.URL || "https://books-and-bot.herokuapp.com/";
+const URL = process.env.URL || "https://goodreads-tgbot.glitch.me";
 
 const createMessageText = book => {
   return `
 <strong>${book.title}</strong>
 <em>${book.author}</em>
-<a href="${book.cover_url}">&#8205;</a>`;
+<a href="${book.cover_url}">&#8205;</a>
+<b>${book.average_rating}</b>
+${book.description}`;
 };
 
 const bot = new Telegraf(BOT_TOKEN);
@@ -24,6 +26,8 @@ bot.on("inline_query", async ctx => {
         title: book.title,
         description: book.author,
         thumb_url: book.thumb_url,
+        avg_rating: book.avg_rating,
+        description: book.description,
         input_message_content: {
           message_text: createMessageText(book),
           parse_mode: "HTML"
